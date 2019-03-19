@@ -73,4 +73,28 @@ router.delete("/:id/clean", (req, res) => {
   });
 });
 
+router.delete("/:id/poptop", (req, res) => {
+  // console.log(req.body);
+  Song.findOneAndUpdate(
+    { _id: req.params.id },
+    { $pull: { comments: -1 } }
+  ).then(song => {
+    song.save((err, song) => {
+      res.json(song);
+    });
+  });
+});
+
+router.delete("/:id/popbottom", (req, res) => {
+  // console.log(req.body);
+  Song.findOneAndUpdate(
+    { _id: req.params.id },
+    { $pull: { comments: 1 } }
+  ).then(song => {
+    song.save((err, song) => {
+      res.json(song);
+    });
+  });
+});
+
 module.exports = router;
