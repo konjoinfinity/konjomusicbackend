@@ -96,16 +96,4 @@ router.delete("/:id/popbottom", (req, res) => {
   );
 });
 
-router.delete("/:id/test", (req, res) => {
-  // console.log(req.params.id);
-  Song.findOneAndUpdate(
-    { _id: req.params.id },
-    { $pull: { comments: {} } }
-  ).then(song => {
-    song.save((err, song) => {
-      res.json(song);
-    });
-  });
-});
-
 module.exports = router;
