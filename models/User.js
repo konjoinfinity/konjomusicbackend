@@ -12,14 +12,15 @@ UserSchema.pre("save", function(next) {
   next();
 });
 
-UserSchema.method("comparePassword", function(dbpassword, password) {
+UserSchema.method("comparePassword", function(password, dbpassword) {
   console.log(password, dbpassword);
-  return new Promise((resolve, reject) => {
-    bcrypt.compare(dbpassword, password, (err, success) => {
-      if (err) return reject(err);
-      return resolve(success);
-    });
-  });
+  if (bcrypt.compareSync(dbpassword, password)) {
+    return true;
+    console.log("true");
+  } else {
+    return false;
+    console.log("false");
+  }
 });
 
 mongoose.model("User", UserSchema);

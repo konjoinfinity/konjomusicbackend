@@ -41,23 +41,21 @@ router.post("/login", (req, res) => {
   if (req.body.email && req.body.password) {
     User.findOne({ email: req.body.email }).then(user => {
       if (user) {
-        let success = user
-          .comparePassword(user.password, req.body.password)
-          .then(response => {
-            if (success === false) {
-              console.log("Failed Login");
-              res.sendStatus(401);
-            } else {
-              console.log("Successful Login");
-              var payload = {
-                id: user.id
-              };
-              var token = jwt.encode(payload, config.jwtSecret);
-              res.json({
-                token: token
-              });
-            }
+        let success = user.comparePassword(user.password, req.body.password);
+        console.log(success);
+        if (success === true) {
+          console.log("Successful Login");
+          var payload = {
+            id: user.id
+          };
+          var token = jwt.encode(payload, config.jwtSecret);
+          res.json({
+            token: token
           });
+        } else {
+          console.log("Failed Login");
+          res.sendStatus(401);
+        }
       } else {
         res.sendStatus(401);
       }
