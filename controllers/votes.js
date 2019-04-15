@@ -4,6 +4,7 @@ const Song = require("../models/song");
 const router = express.Router();
 
 router.put("/upvote", (req, res) => {
+  console.log(req.body.body);
   Song.findByIdAndUpdate(
     { _id: req.body.body },
     { $inc: { votes: 1 } },
@@ -16,6 +17,7 @@ router.put("/upvote", (req, res) => {
 });
 
 router.put("/downvote", (req, res) => {
+  console.log(req.body.body);
   Song.findByIdAndUpdate(
     { _id: req.body.body },
     { $inc: { votes: -1 } },
