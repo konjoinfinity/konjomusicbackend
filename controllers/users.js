@@ -41,7 +41,7 @@ router.post("/login", (req, res) => {
   if (req.body.email && req.body.password) {
     User.findOne({ email: req.body.email }).then(user => {
       if (user) {
-        let success = user.comparePassword(user.password, req.body.password);
+        let success = user.comparePassword(req.body.password, user.password);
         console.log(success);
         if (success === true) {
           console.log("Successful Login");
